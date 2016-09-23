@@ -1,0 +1,114 @@
+% from bottle import route, run, template, request, static_file, url, get, post, response, error
+% import sys, codecs
+% import re
+% import bottle.ext.sqlalchemy
+% import sqlalchemy
+% import sqlalchemy.ext.declarative
+% import db
+% import sqlpy_ce
+% import webbrowser
+% sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
+% db_sqlpy_Menu_data = sqlpy_ce.Menu.menus.select().execute().fetchall()
+
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Menu</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="{{url('static_file', filepath="img/favicon.ico")}}">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{{url('static_file', filepath="css/animate.css")}}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{{url('static_file', filepath="css/icomoon.css")}}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{{url('static_file', filepath="css/bootstrap.css")}}">
+
+	<link rel="stylesheet" href="{{url('static_file', filepath="css/style.css")}}">
+
+
+
+	</head>
+	<body>
+		<div>
+			Menu Name {{name}}
+			<br />
+			<img id="img_datas" alt="">
+			% for Menu_data in db_sqlpy_Menu_data:
+			<script>
+			var Menu_data = "{{name}}";
+			if ("{{name}}" == "{{Menu_data.name}}") {
+				console.log("{{name}}", {{Menu_data.id}}, "{{Menu_data.name}}");
+				var data_id = {{Menu_data.id}};
+				var menu_name = "{{Menu_data.name}}";
+				var price = {{Menu_data.price}};
+				var category_main =　{{Menu_data.category_main}};
+				var category_sub =　{{Menu_data.category_sub}};
+				var img_data =　"{{Menu_data.img}}";
+				var html_data = "<br />";
+
+				html_data = html_data + "ID: " + data_id + "<br />";
+				html_data = html_data + "price: " + price + "<br />";
+				html_data = html_data + "menu_name: " + menu_name + "<br />";
+				html_data = html_data + "category_main: " + category_main + "<br />";
+				html_data = html_data + "Icategory_sub: " + category_sub + "<br />";
+				html_data = html_data + "img_data: " + img_data + "<br />";
+
+				document.write (html_data);
+				document.getElementById('img_datas').src = img_data;
+				};
+
+
+			</script>
+			% end
+		</div>
+	<!-- jQuery -->
+	<script src="{{url('static_file', filepath="js/jquery.min.js")}}"></script>
+	<!-- jQuery Easing -->
+	<script src="{{url('static_file', filepath="js/jquery.easing.1.3.js")}}"></script>
+	<!-- Bootstrap -->
+	<script src="{{url('static_file', filepath="js/bootstrap.min.js")}}"></script>
+	<!-- Waypoints -->
+	<script src="{{url('static_file', filepath="js/jquery.waypoints.min.js")}}"></script>
+	<!-- Portfolio Filter Mixitup -->
+	<script type="text/javascript" src="{{url('static_file', filepath="js/jquery.mixitup.min.js")}}"></script>
+
+	<!-- Main JS (Do not remove) -->
+	<script src="{{url('static_file', filepath="js/main.js")}}"></script>
+
+	<script type="text/javascript">
+	$(function () {
+
+		var filterList = {
+
+			init: function () {
+
+				// MixItUp plugin
+				// http://mixitup.io
+				$('#portfoliolist').mixItUp({
+  				selectors: {
+    			  target: '.portfolio',
+    			  filter: '.filter'
+    		  },
+    		  load: {
+      		  filter: '.all'
+      		}
+				});
+
+			}
+
+		};
+
+		// Run the show!
+		filterList.init();
+
+	});
+	</script>
+
+	</body>
+</html>

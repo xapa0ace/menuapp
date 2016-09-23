@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Login</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+
+	<link rel="stylesheet" href="css/style.css">
+
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	</head>
+	<body>
+
+    <div id="fh5co-portfolio-section">
+    <div class="container">
+              <p>タスク作成</p>
+              <form action="/login/menu_add" method="post"  enctype="multipart/form-data">
+              name: <input type="text" name="name" min="0" max="10" autofocus></br>
+              price: <input type="range" name="price" /></br>
+              category_main:<input type="range" name="category_main" /></br>
+              category_sub:<input type="range" name="category_sub" />
+								</br>
+              <!-- 画像: -->
+              画像:
+							<input type="file" name="upload"></br>
+              <input value="作成" type="submit" /></br>
+              </form>
+          </div>
+      </div>
+      <!-- jQuery -->
+       <script src="/static/js/jquery.min.js"></script>
+    <!-- jQuery Easing -->
+       <script src="/static/js/jquery.easing.1.3.js"></script>
+    <!-- Bootstrap -->
+       <script src="/static/js/bootstrap.min.js"></script>
+    <!-- Waypoints -->
+       <script src="/static/js/jquery.waypoints.min.js"></script>
+    <!-- Portfolio Filter Mixitup -->
+       <script type="text/javascript" src="/static/js/jquery.mixitup.min.js"></script>
+
+    <!-- Main JS (Do not remove) -->
+       <script src="/static/js/main.js"></script>
+	</body>
+</html>
