@@ -3,7 +3,7 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Login</title>
+	<title>TitleMenu Create</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<link rel="shortcut icon" href="favicon.ico">
@@ -27,14 +27,12 @@
 
     <div id="fh5co-portfolio-section">
     <div class="container">
-              <p>タスク作成</p>
-              <form action="/login/menu_add" method="post"  enctype="multipart/form-data">
+              <p>タイトルメニューの作成</p>
+              <form action="/login/title_menu" method="post"  enctype="multipart/form-data">
               name: <input type="text" name="name" min="0" max="10" autofocus required /></br>
-              price: <input type="numbar" name="price" required /></br>
               category_main:<input type="numbar" name="category_main" required/></br>
-              category_sub:<input type="numbar" name="category_sub" required/></br>
               content:<input type="text" name="content" required/></br>
-              times:<input type="numbar" name="times" required/>
+              category_sub:<input type="numbar" name="category_sub" required/></br>
               <!-- 画像: -->
               画像:
 							<input type="file" name="upload" required></br>

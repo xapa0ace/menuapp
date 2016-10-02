@@ -10,6 +10,7 @@ import sqlalchemy.ext.declarative
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlpy_ce import Menu
+from sqlpy_ce import Title_Menu
 from db import staff_db
 import webbrowser
 sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
@@ -23,6 +24,10 @@ def html_index():
 @route('/menu/<name>')
 def html_task(name='Stranger'):
     return template("menu", url=url, name=name)
+
+@route('/menu/<name>/<subname>')
+def html_task(name='Stranger', subname='Stranger'):
+    return template("subname", url=url, name=name, subname=subname)
 
 @route("/static/<filepath:path>", name="static_file")
 def static(filepath):
@@ -86,9 +91,45 @@ def check_team(username, password):
     if username == "" and password == "":
         return False
     else:
-        db.staff_db.menus.insert().execute(name=username, password=password)
+        staff_db.menus.insert().execute(name=username, password=password)
         return True
 
+
+@get("/login/title_menu") # メニュー追加
+def title_menu_add():
+    return template("title_menu", url=url)
+
+@route("/login/title_menu", method="POST")
+def do_title_menu_add():
+
+    upload   = request.files.get('upload')
+
+    print upload
+
+    name, ext = os.path.splitext(upload.filename)
+    if ext not in ('.png', '.jpg', '.jpeg'):
+        return 'File extension not allowed!'
+
+    save_path = get_save_img_path()
+    upload.save(save_path)
+
+    img = u'.%s%s' % (save_path, upload.filename)
+
+    name = u"%s" % (request.forms.get("name"))
+    category_main = u"%s" % (request.forms.get("category_main"))
+    category_sub = u"%s" % (request.forms.get("category_sub"))
+    content = u"%s" % (request.forms.get("content"))
+    print "%s, %s, %s, %s, %s" % (name, category_main, content, category_sub, img)
+
+
+    if check_title_menu_request(name, category_main, content, category_sub, img):
+        return "<p>Add OK! %s, %s, %s, %s, </br><img id='img_datas' src='%s'></p></br><a href='../login/menu_add'>Link</a>" % (name, category_main, content, category_sub, img)
+    else:
+        return "<p>No't Data.</p>"
+
+def check_title_menu_request(name, category_main, content, category_sub, img):
+    Title_Menu.menus.insert().execute(name=name, category_main=category_main, content=content, category_sub=category_sub, img=img)
+    return True
 
 
 @get("/login/menu_add") # メニュー追加
@@ -115,11 +156,13 @@ def do_menu_add():
     price = u"%s" % (request.forms.get("price"))
     category_main = u"%s" % (request.forms.get("category_main"))
     category_sub = u"%s" % (request.forms.get("category_sub"))
-    print "%s, %s, %s, %s, %s" % (name, price, category_main, category_sub, img)
+    content = u"%s" % (request.forms.get("content"))
+    times = u"%s" % (request.forms.get("times"))
+    print "%s, %s, %s, %s, %s, %s, %s" % (name, price, category_main, category_sub, content, times, img)
 
 
-    if check_request(name, price, category_main, category_sub, img):
-        return "<p>Add OK! %s, %s, %s, %s, %s</p></br><a href='../login/menu_add'>Link</a>" % (name, price, category_main, category_sub, img)
+    if check_request(name, price, category_main, category_sub, content, times, img):
+        return "<p>Add OK! %s, %s, %s, %s, %s, %s, </br><img id='img_datas' src='%s'></p></br><a href='../login/menu_add'>Link</a>" % (name, price, category_main, category_sub, content, times, img)
     else:
         return "<p>No't Data.</p>"
 
@@ -128,8 +171,8 @@ def get_save_img_path():
     path_dir = "./static/img/"
     return path_dir
 
-def check_request(name, price, category_main, category_sub, img):
-    Menu.menus.insert().execute(name=name, price=price, category_main=category_main, category_sub=category_sub, img=img)
+def check_request(name, price, category_main, category_sub, content, times, img):
+    Menu.menus.insert().execute(name=name, price=price, category_main=category_main, category_sub=category_sub, content=content, times=times, img=img)
     return True
 
 @get("/login")
@@ -144,10 +187,10 @@ def do_login():
         response.set_cookie("account", username, secret="some-secret-key")
         return template("staff", name=username, url=url)
     else:
-        # db_data = db.staff_db.menus.select().execute().fetchall()
+        # db_data = staff_db.menus.select().execute().fetchall()
         return "<p>Failed !</p>"# % (db_data)
 def check_login(username, password):
-    db_data = db.staff_db.menus.select().execute().fetchall() # IDでstaffのnameをループさせる
+    db_data = staff_db.menus.select().execute().fetchall() # IDでstaffのnameをループさせる
     try:
         for db_id in range(10):
             if username == (db_data[db_id].name):
@@ -164,9 +207,6 @@ def check_login(username, password):
             return False
     except:
         pass
-
-
-
 
 @error(404)
 def error404(error):
