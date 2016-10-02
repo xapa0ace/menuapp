@@ -9,14 +9,13 @@
 % import webbrowser
 % sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
 % db_sqlpy_Menu_data = sqlpy_ce.Menu.menus.select().execute().fetchall()
-% db_sqlpy_Title_Menu_data = sqlpy_ce.Title_Menu.menus.select().execute().fetchall()
 
 <!DOCTYPE html>
 <html class="no-js">
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>{{name}}</title>
+	<title>Menu</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<link rel="shortcut icon" href="{{url('static_file', filepath="img/favicon.ico")}}">
@@ -40,24 +39,23 @@
 			Menu Name {{name}}
 			<br />
 			<img id="img_datas" alt="">
-			% for Title_Menu_data in db_sqlpy_Title_Menu_data:
-			    % for Menu_data in db_sqlpy_Menu_data:
+			% for Menu_data in db_sqlpy_Menu_data:
 			<script>
 			var Menu_data = "{{name}}";
-			if ("{{Title_Menu_data.category_main}}" == "{{Menu_data.category_main}}") {
-				//console.log("{{name}}", {{Menu_data.id}}, "{{Menu_data.name}}");
+			if ("{{name}}" == "{{Menu_data.name}}") {
+				console.log("{{name}}", {{Menu_data.id}}, "{{Menu_data.name}}");
 				var data_id = {{Menu_data.id}};
 				var menu_name = "{{Menu_data.name}}";
+				var price = {{Menu_data.price}};
 				var category_main =　{{Menu_data.category_main}};
-				var content =　"{{Menu_data.content}}";
 				var category_sub =　{{Menu_data.category_sub}};
 				var img_data =　"{{Menu_data.img}}";
 				var html_data = "<br />";
 
 				html_data = html_data + "ID: " + data_id + "<br />";
+				html_data = html_data + "price: " + price + "<br />";
 				html_data = html_data + "menu_name: " + menu_name + "<br />";
 				html_data = html_data + "category_main: " + category_main + "<br />";
-				html_data = html_data + "content: " + content + "<br />";
 				html_data = html_data + "Icategory_sub: " + category_sub + "<br />";
 				html_data = html_data + "img_data: " + img_data + "<br />";
 
@@ -67,7 +65,6 @@
 
 
 			</script>
-			    % end
 			% end
 		</div>
 	<!-- jQuery -->

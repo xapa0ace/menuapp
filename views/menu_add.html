@@ -29,15 +29,14 @@
     <div class="container">
               <p>タスク作成</p>
               <form action="/login/menu_add" method="post"  enctype="multipart/form-data">
-              name: <input type="text" name="name" min="0" max="10" autofocus required /></br>
-              price: <input type="numbar" name="price" required /></br>
-              category_main:<input type="numbar" name="category_main" required/></br>
-              category_sub:<input type="numbar" name="category_sub" required/></br>
-              content:<input type="text" name="content" required/></br>
-              times:<input type="numbar" name="times" required/>
+              name: <input type="text" name="name" min="0" max="10" autofocus></br>
+              price: <input type="range" name="price" /></br>
+              category_main:<input type="range" name="category_main" /></br>
+              category_sub:<input type="range" name="category_sub" />
+								</br>
               <!-- 画像: -->
               画像:
-							<input type="file" name="upload" required></br>
+							<input type="file" name="upload"></br>
               <input value="作成" type="submit" /></br>
               </form>
           </div>

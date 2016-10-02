@@ -8,7 +8,6 @@
 % import webbrowser
 % sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
 % db_sqlpy_Menu_data = sqlpy_ce.Menu.menus.select().execute().fetchall()
-% db_sqlpy_Title_Menu_data = sqlpy_ce.Title_Menu.menus.select().execute().fetchall()
 
 <!DOCTYPE html>
 <html class="no-js">
@@ -36,13 +35,13 @@
 			<div class="container">
 				<ul id="filters" class="clearfix animate-box">
 					<li><span class="filter active" data-filter=".all">All</span></li>
-					% for menu_sort in db_sqlpy_Title_Menu_data:
-					<li><span class="filter" data-filter=".{{menu_sort.category_main}}">{{menu_sort.name}}</span></li>
+					% for menu_sort in db_sqlpy_Menu_data:
+					<li><span class="filter" data-filter=".{{menu_sort.category_main}}">{{menu_sort.category_main}}</span></li>
 					% end
 				</ul>
 				<div id="portfoliolist" class="animate-box">
-
-					% for menu in db_sqlpy_Title_Menu_data:
+					
+					% for menu in db_sqlpy_Menu_data:
 					<div class="portfolio all {{menu.category_main}}" data-cat="{{menu.category_main}}">
 						<div class="portfolio-wrapper">
 							<script>
